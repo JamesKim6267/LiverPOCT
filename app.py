@@ -62,8 +62,16 @@ def ALT(Red,Green):
 
 st.title("ALT&AST Level Detection")
 aminase = ['ALT','AST']
+if st.button("ALT Read Guide"):
+    st.write("Normal: 0~40U/L")
+    st.write("Slight Abnormal: 40~120U/L")
+    st.write("Serious Abnormal: 120U/L~")
+if st.button("AST Read Guide"):
+    st.write("Normal: 0~41U/L")
+    st.write("Slight Abnormal: 41~100U/L")
+    st.write("Serious Abnormal: 100U/L~")
 selected_aminase = st.selectbox('Select your test type',aminase)
-uploaded_file = st.file_uploader("Choose an image file", type='jpg')
+uploaded_file = st.file_uploader("Choose an image file", type=['jpg','jpeg','png'])
 
 if uploaded_file is not None and selected_aminase == 'ALT':
     # Convert the file to an opencv image.
@@ -75,18 +83,31 @@ if uploaded_file is not None and selected_aminase == 'ALT':
     if st.button("Process"): 
         color_img = rgb_image
         binary_img = binary(color_img)
-
         if binary_img is not None: 
             cropped_img = contour(binary_img)
             st.image(cropped_img)
-
             if cropped_img is not None:
                 Red,Green,Blue = average_rgb(cropped_img)
-                st.write(round(Red,2),round(Green,2),round(Blue,2))
-
                 if Red and Green is not None:
                     alt_level = ALT(Red,Green)
-                    st.write(alt_level)
+                    if alt_level <= 20:
+                        st.write("ALT Range: 0-20U/L")
+                    if alt_level >20 and alt_level <=40:
+                        st.write("ALT Range: 20-40U/L")
+                    if alt_level >40 and alt_level <=60:
+                        st.write("ALT Range: 40-60U/L")
+                    if alt_level >60 and alt_level <=80:
+                        st.write("ALT Range: 60-80U/L")
+                    if alt_level >80 and alt_level <=100:
+                        st.write("ALT Range: 80-100U/L")
+                    if alt_level >100 and alt_level <=120:
+                        st.write("ALT Range: 100-120U/L")
+                    if alt_level >120 and alt_level <=140:
+                        st.write("ALT Range: 120-140U/L")
+                    if alt_level >140 and alt_level <=200:
+                        st.write("ALT Range: 140-200U/L")
+                    if alt_level > 200:
+                        st.write("ALT Range > 200U/L")
 
 
 if uploaded_file is not None and selected_aminase == 'AST':
