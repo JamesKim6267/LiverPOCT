@@ -7,6 +7,8 @@ import requests
 
 import streamlit as st
 
+from math import *
+
 #rgb_img = rgb색을 가지는 opencv용 사진파일
 #
 def binary(color_img):
@@ -90,24 +92,8 @@ if uploaded_file is not None and selected_aminase == 'ALT':
                 Red,Green,Blue = average_rgb(cropped_img)
                 if Red and Green is not None:
                     alt_level = ALT(Red,Green)
-                    if alt_level <= 20:
-                        st.write("ALT Range: 0-20U/L")
-                    if alt_level >20 and alt_level <=40:
-                        st.write("ALT Range: 20-40U/L")
-                    if alt_level >40 and alt_level <=60:
-                        st.write("ALT Range: 40-60U/L")
-                    if alt_level >60 and alt_level <=80:
-                        st.write("ALT Range: 60-80U/L")
-                    if alt_level >80 and alt_level <=100:
-                        st.write("ALT Range: 80-100U/L")
-                    if alt_level >100 and alt_level <=120:
-                        st.write("ALT Range: 100-120U/L")
-                    if alt_level >120 and alt_level <=140:
-                        st.write("ALT Range: 120-140U/L")
-                    if alt_level >140 and alt_level <=200:
-                        st.write("ALT Range: 140-200U/L")
-                    if alt_level > 200:
-                        st.write("ALT Range > 200U/L")
+                    if alt_level is not None:
+                        st.write("ALT Range:"+str(ceil(alt_level-(alt_level*13.7/100)))+"U/L"+"-"+str(ceil(alt_level+(alt_level*13.7/100)))+"U/L")
 
 
 if uploaded_file is not None and selected_aminase == 'AST':
